@@ -19,6 +19,7 @@ export class AddTaskComponent {
   public dane: Task =  WorkingService.getEmptyTask();
   public status = WorkingService.taskStatus;
   public categories = [WorkingService.getBasicCategory()];
+  public colors: string[] = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
   
   constructor(public serv: WorkingService, private activeRouter: ActivatedRoute, private router: Router) {}
   

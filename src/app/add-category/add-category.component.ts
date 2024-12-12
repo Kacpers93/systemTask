@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Category } from '../category';
 import { WorkingService } from '../working.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,22 +8,33 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-add-category',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule], // Add CommonModule here
   templateUrl: './add-category.component.html',
-  styleUrl: './add-category.component.scss'
+  styleUrls: ['./add-category.component.scss'] // Corrected to styleUrls
 })
 export class AddCategoryComponent {
-  public dane: Category =  WorkingService.getEmptyCategory();
+  public dane: Category = WorkingService.getEmptyCategory();
+  public categories: Category[] = [];
 
-  constructor(public serv: WorkingService, private activeRouter: ActivatedRoute, private router: Router) {}
+  constructor(
+    public serv: WorkingService,
+    private activeRouter: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    let id = this.activeRouter.snapshot.paramMap.get("id");
-    this.dane = this.serv.getCategory(id != null ? parseInt(id) : -1);    
+    const id = this.activeRouter.snapshot.paramMap.get('id');
+    this.dane = this.serv.getCategory(id ? parseInt(id) : -1);    
+    this.categories = this.serv.getCategories();
   }
 
-  save(){
+  save() {
     this.serv.addOrUpdateCategory(this.dane);
-    alert("Zapisano");
+    alert('Zapisano');
+  }
+
+  public remove(id: number): void {
+    this.serv.remCategory(id);
+    this.categories = this.serv.getCategories();
   }
 }

@@ -11,4 +11,5 @@ export interface Task {
     timeWorking: number,
     lastStatus?: Date | null,
     work: Work[],
+    color?: string; // Add color property
 }

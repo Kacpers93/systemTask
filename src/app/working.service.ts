@@ -176,6 +176,12 @@ export class WorkingService {
     this.refresh();
   }
 
+  public remCategory(id: number): void {
+    this.categories = this.categories.filter((e) => e.id != id);
+    this.save();
+    this.refresh();
+  }
+
   public updateWorkTime(task: Task) {
     let workList: Work[] = task.work.filter(e => e.status.id == WorkingService.workStatusStop);
     let sum = 0;
